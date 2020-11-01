@@ -35,6 +35,19 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="string", length=64, unique=true)
+     */
+    private $nick;
+
+    public function __construct(string $email, string $nick)
+    {
+        $this->email = $email;
+        $this->nick = $nick;
+
+        $this->setRoles(['ROLE_USER']);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,6 +106,17 @@ class User implements UserInterface
     {
         $this->password = $password;
 
+        return $this;
+    }
+
+    public function getNick()
+    {
+        return $this->nick;
+    }
+
+    public function setNick(string $nick): self
+    {
+        $this->nick = $nick;
         return $this;
     }
 
