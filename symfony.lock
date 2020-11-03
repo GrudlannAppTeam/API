@@ -305,5 +305,8 @@
     },
     "webimpress/safe-writer": {
         "version": "2.0.1"
+    },
+    "zircote/swagger-php": {
+        "version": "3.1.0"
     }
 }

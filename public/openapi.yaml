@@ -1,0 +1,25 @@
+openapi: 3.0.0
+info:
+  title: GrudlannApp
+  version: '1'
+paths:
+  /api/users/register:
+    post:
+      tags:
+        - User
+      summary: Registration
+      operationId: 'App\Controller\UserController::register'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                nick:
+                  type: string
+                  uniqueItems: true
+                password:
+                  type: string
+                  example: Testowe123!
+              type: object
