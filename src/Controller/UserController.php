@@ -2,19 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Constraints\CreateUserConstraints;
+use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use OpenApi\Annotations as OA;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-/**
- * @OA\Info(title="GrudlannApp",
- *     version="1")
- */
-class UserController extends AbstractController
+class UserController extends AbstractBaseController
 {
     /**
      * @OA\Post(
@@ -45,20 +41,19 @@ class UserController extends AbstractController
      * )
      *
      */
-    public function register(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): JsonResponse
+    public function register(Request $request, UserService $userService): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-
-        $user = new User(
-            $data['email'],
-            $data['nick']
+        $this->_validatorService->validateArray(
+            $data = json_decode($request->getContent(), true),
+            CreateUserConstraints::get()
         );
 
-        $user->setPassword($encoder->encodePassword($user, $data['password']));
+        $user = $userService->createUser($data['username'], $data['password'], $data['nick']);
 
-        $em->persist($user);
-        $em->flush();
+        $serializedUser = $this->_serializer->normalize($user, 'array', [
+            'groups' => 'user:post'
+        ]);
 
-        return new JsonResponse("it's works", JsonResponse::HTTP_CREATED);
+        return new JsonResponse($serializedUser, JsonResponse::HTTP_CREATED);
     }
 }
