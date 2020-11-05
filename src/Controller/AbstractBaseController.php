@@ -27,4 +27,34 @@ abstract class AbstractBaseController extends AbstractController
         $this->_serializer = new Serializer([$normalizer]);
         $this->_validatorService = $validatorService;
     }
+
+    /**
+     * @OA\Post(
+     *     tags={"User"},
+     *     summary="Login",
+     *     path="/api/users/login",
+     *     @OA\RequestBody(
+     *       @OA\MediaType(
+     *           mediaType="application/json",
+     *           @OA\Schema(
+     *               @OA\Property(
+     *                   property="email",
+     *                   type="string",
+     *                   uniqueItems=true,
+     *               ),
+     *               @OA\Property(
+     *                   property="password",
+     *                   type="string",
+     *                   example="Testowe123!"
+     *               ),
+     *           )
+     *       )
+     *    ),
+     * )
+     *
+     */
+    public function docLogin()
+    {
+        //placeholder to documentation. Login action is in JWT package
+    }
 }

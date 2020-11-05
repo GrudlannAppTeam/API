@@ -6,6 +6,7 @@ use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Type;
+use Symfony\Component\Validator\Constraints\Unique;
 
 class CreateUserConstraints
 {
@@ -14,16 +15,19 @@ class CreateUserConstraints
         return new Collection([
             'allowExtraFields' => true,
             'fields' => [
-                'username' => [
+                'email' => [
                     new NotBlank(),
                     new Type('string'),
                     new Email()
-                    //@TODO Check if email exist
                 ],
                 'password' => [
                     new NotBlank(),
                     new Type('string'),
                     //@TODO Regex validation
+                ],
+                'nick' => [
+                    new NotBlank(),
+                    new Type('string')
                 ]
             ]
         ]);

@@ -4,11 +4,9 @@ namespace App\Controller;
 
 use App\Constraints\CreateUserConstraints;
 use App\Service\UserService;
-use Doctrine\ORM\EntityManagerInterface;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractBaseController
 {
@@ -24,6 +22,7 @@ class UserController extends AbstractBaseController
      *               @OA\Property(
      *                   property="email",
      *                   type="string",
+     *                   uniqueItems=true
      *               ),
      *               @OA\Property(
      *                   property="nick",
@@ -37,7 +36,7 @@ class UserController extends AbstractBaseController
      *               ),
      *           )
      *       )
-     *   ),
+     *    ),
      * )
      *
      */
@@ -48,7 +47,7 @@ class UserController extends AbstractBaseController
             CreateUserConstraints::get()
         );
 
-        $user = $userService->createUser($data['username'], $data['password'], $data['nick']);
+        $user = $userService->createUser($data['email'], $data['password'], $data['nick']);
 
         $serializedUser = $this->_serializer->normalize($user, 'array', [
             'groups' => 'user:post'

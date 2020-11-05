@@ -3,6 +3,24 @@ info:
   title: GrudlannApp
   version: '1'
 paths:
+  /api/users/login:
+    post:
+      tags:
+        - User
+      summary: Login
+      operationId: 'App\Controller\AbstractBaseController::docLogin'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                  uniqueItems: true
+                password:
+                  type: string
+                  example: Testowe123!
+              type: object
   /api/users/register:
     post:
       tags:
@@ -16,6 +34,7 @@ paths:
               properties:
                 email:
                   type: string
+                  uniqueItems: true
                 nick:
                   type: string
                   uniqueItems: true
