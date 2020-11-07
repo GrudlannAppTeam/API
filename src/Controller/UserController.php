@@ -4,12 +4,24 @@ namespace App\Controller;
 
 use App\Constraints\CreateUserConstraints;
 use App\Service\UserService;
+use App\Service\ValidatorService;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends AbstractBaseController
 {
+    private $validatorService;
+
+    private $userService;
+
+    public function __construct(ValidatorService $validatorService, UserService $userService)
+    {
+        parent::__construct($validatorService);
+        $this->validatorService = $validatorService;
+        $this->userService = $userService;
+    }
+
     /**
      * @OA\Post(
      *     tags={"User"},
@@ -40,19 +52,37 @@ class UserController extends AbstractBaseController
      * )
      *
      */
-    public function register(Request $request, UserService $userService): JsonResponse
+    public function register(Request $request): JsonResponse
     {
         $this->_validatorService->validateArray(
             $data = json_decode($request->getContent(), true),
             CreateUserConstraints::get()
         );
 
-        $user = $userService->createUser($data['email'], $data['password'], $data['nick']);
+        $user = $this->userService->createUser($data['email'], $data['password'], $data['nick']);
 
         $serializedUser = $this->_serializer->normalize($user, 'array', [
             'groups' => 'user:post'
         ]);
 
         return new JsonResponse($serializedUser, JsonResponse::HTTP_CREATED);
+    }
+
+    /**
+     * @OA\Get(
+     *     tags={"User"},
+     *     summary="Registration",
+     *     path="/api/users",
+     * )
+     */
+    public function getUsers(): JsonResponse
+    {
+        $users = $this->userService->getUsers();
+
+        $serializedUsers = $this->_serializer->normalize($users, 'array', [
+            'groups' => 'user:get'
+        ]);
+
+        return new JsonResponse($serializedUsers, JsonResponse::HTTP_OK);
     }
 }

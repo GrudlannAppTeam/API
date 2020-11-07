@@ -2,3 +2,8 @@ api.users.register:
     path: /users/register
     controller: App\Controller\UserController::register
     methods: POST
+
+api.users.get:
+    path: /users
+    controller: App\Controller\UserController:getUsers
+    methods: GET

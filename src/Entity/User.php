@@ -18,14 +18,14 @@ class User implements UserInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      *
-     * @Groups({"user:post"})
+     * @Groups({"user:post", "user:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      *
-     * @Groups({"user:post"})
+     * @Groups({"user:post", "user:get"})
      */
     private $email;
 
@@ -43,7 +43,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=64, unique=true)
      *
-     * @Groups({"user:post"})
+     * @Groups({"user:post", "user:get"})
      */
     private $nick;
 
