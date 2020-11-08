@@ -21,6 +21,20 @@ paths:
                   type: string
                   example: Testowe123!
               type: object
+  /api/tasting-rooms:
+    post:
+      tags:
+        - 'Tasting Room'
+      summary: Create
+      operationId: 'App\Controller\TastingRoomController::create'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+              type: object
   /api/users/register:
     post:
       tags:
@@ -42,3 +56,9 @@ paths:
                   type: string
                   example: Testowe123!
               type: object
+  /api/users:
+    get:
+      tags:
+        - User
+      summary: Registration
+      operationId: 'App\Controller\UserController::getUsers'

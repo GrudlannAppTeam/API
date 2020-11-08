@@ -71,7 +71,7 @@ class UserController extends AbstractBaseController
     /**
      * @OA\Get(
      *     tags={"User"},
-     *     summary="Registration",
+     *     summary="Get all users",
      *     path="/api/users",
      * )
      */
