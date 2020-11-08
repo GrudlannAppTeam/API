@@ -1,3 +1,4 @@
+#USER
 api.users.register:
     path: /users/register
     controller: App\Controller\UserController::register
@@ -7,3 +8,9 @@ api.users.get:
     path: /users
     controller: App\Controller\UserController:getUsers
     methods: GET
+
+#TASTING ROOM
+api.tastingroom.create:
+    path: /tasting-rooms
+    controller: App\Controller\TastingRoomController:create
+    methods: POST
