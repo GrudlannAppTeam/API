@@ -41,6 +41,20 @@ paths:
         - 'Tasting Room'
       summary: Delete
       operationId: 'App\Controller\TastingRoomController::delete'
+  /api/tasting-rooms/join:
+    post:
+      tags:
+        - 'Tasting Room'
+      summary: Join
+      operationId: 'App\Controller\TastingRoomController::join'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                code:
+                  type: string
+              type: object
   /api/users/register:
     post:
       tags:

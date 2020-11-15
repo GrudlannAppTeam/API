@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TastingRoomRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -42,11 +44,17 @@ class TastingRoom
      */
     private $owner;
 
+    /**
+     * @ORM\OneToMany(targetEntity="User", mappedBy="tastingRoom")
+     */
+    private $users;
+
     public function __construct(string $name, string $code, User $owner)
     {
         $this->name = $name;
         $this->code = $code;
         $this->owner = $owner;
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): int
@@ -78,6 +86,33 @@ class TastingRoom
     public function setOwner($owner): self
     {
         $this->owner = $owner;
+        return $this;
+    }
+
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setTastingRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            if ($user->getTastingRoom() === $this) {
+                $user->setTastingRoom(null);
+            }
+        }
+
         return $this;
     }
 }

@@ -69,4 +69,19 @@ class TastingRoomService
         $this->em->remove($tastingRoom);
         $this->em->flush();
     }
+
+    public function joinToTastingRoom(string $code, User $user): TastingRoom
+    {
+        $tastingRoom = $this->tastingRoomRepository->findOneBy(['code' => $code]);
+
+        if ($tastingRoom === null) {
+            throw new NotFoundException($code);
+        }
+
+        $tastingRoom->addUser($user);
+        $this->em->persist($tastingRoom);
+        $this->em->flush();
+
+        return $tastingRoom;
+    }
 }

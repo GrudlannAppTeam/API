@@ -47,6 +47,12 @@ class User implements UserInterface
      */
     private $nick;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="TastingRoom", inversedBy="users")
+     * @ORM\JoinColumn(name="tasting_room_id", referencedColumnName="id")
+     */
+    private $tastingRoom;
+
     public function __construct(string $email, string $nick)
     {
         $this->email = $email;
@@ -142,5 +148,16 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getTastingRoom(): TastingRoom
+    {
+        return $this->tastingRoom;
+    }
+
+    public function setTastingRoom(TastingRoom $tastingRoom): self
+    {
+        $this->tastingRoom = $tastingRoom;
+        return $this;
     }
 }

@@ -21,3 +21,8 @@ api.tastingroom.delete:
     methods: DELETE
     requirements:
         tastingRoomId: '\d+'
+
+api.tastingroom.join:
+    path: /tasting-rooms/join
+    controller: App\Controller\TastingRoomController:join
+    methods: POST

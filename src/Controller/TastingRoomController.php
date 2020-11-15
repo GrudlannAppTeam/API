@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Constraints\CreateTastingRoomConstraints;
+use App\Constraints\JoinTastingRoomConstraints;
 use App\Entity\TastingRoom;
 use App\Service\TastingRoomService;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -61,5 +62,42 @@ class TastingRoomController extends AbstractBaseController
         );
 
         return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @OA\Post(
+     *     tags={"Tasting Room"},
+     *     summary="Join",
+     *     path="/api/tasting-rooms/join",
+     *     @OA\RequestBody(
+     *       @OA\MediaType(
+     *           mediaType="application/json",
+     *           @OA\Schema(
+     *               @OA\Property(
+     *                   property="code",
+     *                   type="string"
+     *               )
+     *           )
+     *       )
+     *    ),
+     * )
+     */
+    public function join(Request $request, TastingRoomService $tastingRoomService): JsonResponse
+    {
+        $this->_validatorService->validateArray(
+            $data = json_decode($request->getContent(), true),
+            JoinTastingRoomConstraints::get()
+        );
+
+        $tastingRoom = $tastingRoomService->joinToTastingRoom(
+            $data['code'],
+            $this->getUser()
+        );
+
+        $serializedTastingRoom = $this->_serializer->normalize($tastingRoom, 'array', [
+            'groups' => 'tasting-room:post'
+        ]);
+
+        return new JsonResponse($serializedTastingRoom, JsonResponse::HTTP_OK);
     }
 }
