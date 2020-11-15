@@ -35,6 +35,12 @@ paths:
                 name:
                   type: string
               type: object
+  '/api/tasting-rooms/{tastingRoomId}':
+    delete:
+      tags:
+        - 'Tasting Room'
+      summary: Delete
+      operationId: 'App\Controller\TastingRoomController::delete'
   /api/users/register:
     post:
       tags:
@@ -60,5 +66,5 @@ paths:
     get:
       tags:
         - User
-      summary: Registration
+      summary: 'Get all users'
       operationId: 'App\Controller\UserController::getUsers'

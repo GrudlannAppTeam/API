@@ -14,3 +14,10 @@ api.tastingroom.create:
     path: /tasting-rooms
     controller: App\Controller\TastingRoomController:create
     methods: POST
+
+api.tastingroom.delete:
+    path: /tasting-rooms/{tastingRoom}
+    controller: App\Controller\TastingRoomController:delete
+    methods: DELETE
+    requirements:
+        tastingRoomId: '\d+'

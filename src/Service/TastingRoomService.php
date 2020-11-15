@@ -4,6 +4,8 @@ namespace App\Service;
 
 use App\Entity\TastingRoom;
 use App\Entity\User;
+use App\Exception\NotFoundException;
+use App\Exception\TastingRoomOwnerException;
 use App\Exception\UserHasRoomException;
 use App\Repository\TastingRoomRepository;
 use App\Utils\CodeGenerator;
@@ -50,5 +52,21 @@ class TastingRoomService
         if ($tastingRoom !== null) {
             throw new UserHasRoomException($tastingRoom->getId());
         }
+    }
+
+    public function deleteTastingRoom(int $tastingRoomId, int $ownerId = null): void
+    {
+        $tastingRoom = $this->tastingRoomRepository->find($tastingRoomId);
+
+        if ($tastingRoom === null) {
+            throw new NotFoundException($tastingRoomId);
+        }
+
+        if ($tastingRoom->getOwner()->getId() !== $ownerId) {
+            throw new TastingRoomOwnerException();
+        }
+
+        $this->em->remove($tastingRoom);
+        $this->em->flush();
     }
 }

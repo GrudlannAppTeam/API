@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Constraints\CreateTastingRoomConstraints;
+use App\Entity\TastingRoom;
 use App\Service\TastingRoomService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,5 +44,22 @@ class TastingRoomController extends AbstractBaseController
         ]);
 
         return new JsonResponse($serializedTastingRoom, JsonResponse::HTTP_CREATED);
+    }
+
+    /**
+     * @OA\Delete(
+     *     tags={"Tasting Room"},
+     *     summary="Delete",
+     *     path="/api/tasting-rooms/{tastingRoomId}"
+     * )
+     */
+    public function delete(TastingRoom $tastingRoom, TastingRoomService $tastingRoomService): JsonResponse
+    {
+        $tastingRoomService->deleteTastingRoom(
+            $tastingRoom->getId(),
+            $this->getUser() ? $this->getUser()->getId() : null
+        );
+
+        return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
     }
 }
