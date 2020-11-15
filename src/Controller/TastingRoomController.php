@@ -29,14 +29,14 @@ class TastingRoomController extends AbstractBaseController
      * )
      *
      */
-    public function create(Request $request, TastingRoomService $tastingRoomService)
+    public function create(Request $request, TastingRoomService $tastingRoomService): JsonResponse
     {
         $this->_validatorService->validateArray(
             $data = json_decode($request->getContent(), true),
             CreateTastingRoomConstraints::get()
         );
 
-        $tastingRoom = $tastingRoomService->createTastingRoom($data['name']);
+        $tastingRoom = $tastingRoomService->createTastingRoom($data['name'], $this->getUser());
 
         $serializedTastingRoom = $this->_serializer->normalize($tastingRoom, 'array', [
             'groups' => 'tasting-room:post'

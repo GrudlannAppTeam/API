@@ -34,10 +34,19 @@ class TastingRoom
      */
     private $code;
 
-    public function __construct(string $name, string $code)
+    /**
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+     *
+     * @Groups({"tasting-room:post", "tasting-room:get"})
+     */
+    private $owner;
+
+    public function __construct(string $name, string $code, User $owner)
     {
         $this->name = $name;
         $this->code = $code;
+        $this->owner = $owner;
     }
 
     public function getId(): int
@@ -59,5 +68,16 @@ class TastingRoom
     public function getCode(): string
     {
         return $this->code;
+    }
+
+    public function getOwner(): User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner($owner): self
+    {
+        $this->owner = $owner;
+        return $this;
     }
 }

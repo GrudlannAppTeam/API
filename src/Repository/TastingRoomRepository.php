@@ -19,6 +19,16 @@ class TastingRoomRepository extends ServiceEntityRepository
         parent::__construct($registry, TastingRoom::class);
     }
 
+    public function checkIfUserHasRoom(int $userId)
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.owner = :user_id')
+            ->setParameter('user_id', $userId)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     // /**
     //  * @return TastingRoom[] Returns an array of TastingRoom objects
     //  */

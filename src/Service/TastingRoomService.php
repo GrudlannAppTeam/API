@@ -3,6 +3,8 @@
 namespace App\Service;
 
 use App\Entity\TastingRoom;
+use App\Entity\User;
+use App\Exception\UserHasRoomException;
 use App\Repository\TastingRoomRepository;
 use App\Utils\CodeGenerator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,11 +22,14 @@ class TastingRoomService
         $this->codeGenerator = $codeGenerator;
     }
 
-    public function createTastingRoom(string $name): TastingRoom
+    public function createTastingRoom(string $name, User $owner): TastingRoom
     {
+        $this->checkIfUserHasRoom($owner->getId());
+
         $tastingRoom = new TastingRoom(
             $name,
-            $this->codeGenerator->generate(6)
+            $this->codeGenerator->generate(6),
+            $owner
         );
 
         $this->em->persist($tastingRoom);
@@ -36,5 +41,14 @@ class TastingRoomService
     public function getTastingRooms(): array
     {
         return $this->tastingRoomRepository->findAll();
+    }
+
+    public function checkIfUserHasRoom(int $userId): void
+    {
+        $tastingRoom = $this->tastingRoomRepository->checkIfUserHasRoom($userId);
+
+        if ($tastingRoom !== null) {
+            throw new UserHasRoomException($tastingRoom->getId());
+        }
     }
 }
