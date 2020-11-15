@@ -12,7 +12,7 @@ class UserHasRoomException extends Exception implements ApiExceptionInterface
     public function __construct($tastingRoomId)
     {
         parent::__construct(
-            json_encode('The user already has a room. First close the room with id: ' . $tastingRoomId),
+            "The user already has a room. First close the room with id: $tastingRoomId",
             JsonResponse::HTTP_BAD_REQUEST
         );
     }
