@@ -49,12 +49,19 @@ class TastingRoom
      */
     private $users;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Beer", inversedBy="tastingRooms")
+     * @ORM\JoinTable(name="tastingrooms_beers")
+     */
+    private $beers;
+
     public function __construct(string $name, string $code, User $owner)
     {
         $this->name = $name;
         $this->code = $code;
         $this->owner = $owner;
         $this->users = new ArrayCollection();
+        $this->beers = new ArrayCollection();
     }
 
     public function getId(): int
@@ -111,6 +118,29 @@ class TastingRoom
             if ($user->getTastingRoom() === $this) {
                 $user->setTastingRoom(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getBeers(): ArrayCollection
+    {
+        return $this->beers;
+    }
+
+    public function addBeer(Beer $beer): TastingRoom
+    {
+        if (!$this->beers->contains($beer)) {
+            $this->beers[] = $beer;
+        }
+
+        return $this;
+    }
+
+    public function removeBeer(Beer $beer): self
+    {
+        if ($this->beers->contains($beer)) {
+            $this->beers->removeElement($beer);
         }
 
         return $this;
