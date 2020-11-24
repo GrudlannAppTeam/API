@@ -91,8 +91,15 @@ class BeerController extends AbstractBaseController
             AddBeerToTastingRoomConstraints::get()
         );
 
-        $beerService->addBeerToTastingRoom($data['beerId'], $data['tastingRoomId'], $this->getUser()->getId());
+        $beer = $beerService->addBeerToTastingRoom(
+            $data['beerId'],
+            $data['tastingRoomId'],
+            $this->getUser()->getId()
+        );
+        $serializedBeer = $this->_serializer->normalize($beer, 'array', [
+            'groups' => 'beer:add-tasting-room'
+        ]);
 
-        return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
+        return new JsonResponse($serializedBeer, JsonResponse::HTTP_CREATED);
     }
 }

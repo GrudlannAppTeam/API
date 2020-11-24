@@ -18,7 +18,7 @@ class TastingRoom
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      *
-     * @Groups({"tasting-room:post", "tasting-room:get"})
+     * @Groups({"tasting-room:post", "tasting-room:get", "beer:add-tasting-room"})
      */
     private $id;
 
@@ -52,6 +52,8 @@ class TastingRoom
     /**
      * @ORM\ManyToMany(targetEntity="Beer", inversedBy="tastingRooms")
      * @ORM\JoinTable(name="tastingrooms_beers")
+     *
+     * @Groups({"beer:add-tasting-room"})
      */
     private $beers;
 
@@ -123,7 +125,7 @@ class TastingRoom
         return $this;
     }
 
-    public function getBeers(): ArrayCollection
+    public function getBeers(): Collection
     {
         return $this->beers;
     }
