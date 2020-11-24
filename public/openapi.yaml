@@ -39,6 +39,22 @@ paths:
                 name:
                   type: string
               type: object
+  /api/beers/tasting-rooms:
+    post:
+      tags:
+        - Beer
+      summary: 'Add beer to tasting room'
+      operationId: 'App\Controller\BeerController::addBeerToTastingRoom'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                beerId:
+                  type: integer
+                tastingRoomId:
+                  type: integer
+              type: object
   /api/tasting-rooms:
     post:
       tags:

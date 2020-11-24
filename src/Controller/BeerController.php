@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Constraints\AddBeerToTastingRoomConstraints;
 use App\Constraints\CreateBeersConstraints;
 use App\Service\BeerService;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -59,5 +60,39 @@ class BeerController extends AbstractBaseController
         ]);
 
         return new JsonResponse($serializedBeers, JsonResponse::HTTP_OK);
+    }
+
+    /**
+     * @OA\Post(
+     *     tags={"Beer"},
+     *     summary="Add beer to tasting room",
+     *     path="/api/beers/tasting-rooms",
+     *     @OA\RequestBody(
+     *       @OA\MediaType(
+     *           mediaType="application/json",
+     *           @OA\Schema(
+     *               @OA\Property(
+     *                   property="beerId",
+     *                   type="integer"
+     *               ),
+     *               @OA\Property(
+     *                   property="tastingRoomId",
+     *                   type="integer"
+     *               )
+     *           )
+     *       )
+     *    ),
+     * )
+     */
+    public function addBeerToTastingRoom(Request $request, BeerService $beerService)
+    {
+        $this->_validatorService->validateArray(
+            $data = json_decode($request->getContent(), true),
+            AddBeerToTastingRoomConstraints::get()
+        );
+
+        $beerService->addBeerToTastingRoom($data['beerId'], $data['tastingRoomId'], $this->getUser()->getId());
+
+        return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
     }
 }

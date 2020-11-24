@@ -12,7 +12,7 @@ class TastingRoomOwnerException extends Exception implements ApiExceptionInterfa
     public function __construct()
     {
         parent::__construct(
-            "Only owner can delete/close tasting room",
+            "Only owner can operate on tasting room",
             JsonResponse::HTTP_FORBIDDEN
         );
     }

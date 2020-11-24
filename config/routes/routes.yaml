@@ -37,3 +37,8 @@ api.beer.get:
     path: /beers
     controller: App\Controller\BeerController:list
     methods: GET
+
+api.beer.add_tastingroom:
+    path: /beers/tasting-rooms
+    controller: App\Controller\BeerController:addBeerToTastingRoom
+    methods: POST
