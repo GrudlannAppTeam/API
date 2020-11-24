@@ -21,6 +21,24 @@ paths:
                   type: string
                   example: Testowe123!
               type: object
+  /api/beers:
+    get:
+      tags:
+        - Beer
+      summary: 'Get all beers'
+    post:
+      tags:
+        - Beer
+      summary: Create
+      operationId: 'App\Controller\BeerController::create'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+              type: object
   /api/tasting-rooms:
     post:
       tags:

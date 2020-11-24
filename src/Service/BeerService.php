@@ -17,7 +17,7 @@ class BeerService
         $this->em = $em;
     }
 
-    public function createBeer($name)
+    public function createBeer($name): Beer
     {
         $beer = new Beer($name);
 
@@ -25,5 +25,10 @@ class BeerService
         $this->em->flush();
 
         return $beer;
+    }
+
+    public function getAllBeers(): array
+    {
+        return $this->beerRepository->findAll();
     }
 }

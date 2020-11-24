@@ -32,3 +32,8 @@ api.beer.create:
     path: /beers
     controller: App\Controller\BeerController:create
     methods: POST
+
+api.beer.get:
+    path: /beers
+    controller: App\Controller\BeerController:list
+    methods: GET
