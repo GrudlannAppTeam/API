@@ -96,7 +96,7 @@ class TastingRoomController extends AbstractBaseController
         );
 
         $serializedTastingRoom = $this->_serializer->normalize($tastingRoom, 'array', [
-            'groups' => 'tasting-room:post'
+            'groups' => 'tasting-room:join'
         ]);
 
         return new JsonResponse($serializedTastingRoom, JsonResponse::HTTP_OK);

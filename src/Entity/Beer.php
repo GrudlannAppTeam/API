@@ -18,14 +18,14 @@ class Beer
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      *
-     * @Groups({"beer:post", "beer:get", "beer:add-tasting-room"})
+     * @Groups({"beer:post", "beer:get", "beer:add-tasting-room", "tasting-room:join"})
      */
     private $id;
 
     /**
      * @ORM\Column(name="name", type="string", length=255)
      *
-     * @Groups({"beer:post", "beer:get"})
+     * @Groups({"beer:post", "beer:get", "tasting-room:join"})
      */
     private $name;
 
