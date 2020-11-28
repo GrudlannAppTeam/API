@@ -27,6 +27,11 @@ api.tastingroom.join:
     controller: App\Controller\TastingRoomController:join
     methods: POST
 
+api.tastingroom.start:
+    path: /tasting-rooms
+    controller: App\Controller\TastingRoomController:start
+    methods: PUT
+
 #BEER
 api.beer.create:
     path: /beers

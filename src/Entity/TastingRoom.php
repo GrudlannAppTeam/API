@@ -37,6 +37,13 @@ class TastingRoom
     private $code;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     *
+     * @Groups({"tasting-room:post", "tasting-room:get"})
+     */
+    private $isStart;
+
+    /**
      * @ORM\OneToOne(targetEntity="User")
      * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
      *
@@ -145,6 +152,17 @@ class TastingRoom
             $this->beers->removeElement($beer);
         }
 
+        return $this;
+    }
+
+    public function isStart(): ?bool
+    {
+        return $this->isStart;
+    }
+
+    public function setIsStart(bool $isStart): self
+    {
+        $this->isStart = $isStart;
         return $this;
     }
 }

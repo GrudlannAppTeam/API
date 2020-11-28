@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\TastingRoom;
 use App\Entity\User;
 use App\Exception\NotFoundException;
+use App\Exception\TastingRoomIsStartException;
 use App\Exception\TastingRoomOwnerException;
 use App\Exception\UserHasRoomException;
 use App\Repository\TastingRoomRepository;
@@ -78,7 +79,26 @@ class TastingRoomService
             throw new NotFoundException($code);
         }
 
+        if ($tastingRoom->isStart()) {
+            throw new TastingRoomIsStartException();
+        }
+
         $tastingRoom->addUser($user);
+        $this->em->persist($tastingRoom);
+        $this->em->flush();
+
+        return $tastingRoom;
+    }
+
+    public function startTastingRoom(int $tastingRoomId, bool $status): TastingRoom
+    {
+        $tastingRoom = $this->tastingRoomRepository->find($tastingRoomId);
+
+        if ($tastingRoom === null) {
+            throw new NotFoundException($tastingRoomId);
+        }
+
+        $tastingRoom->setIsStart($status);
         $this->em->persist($tastingRoom);
         $this->em->flush();
 
