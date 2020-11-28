@@ -2,11 +2,12 @@
 
 namespace App\Constraints;
 
+use App\Constraints\CustomConstraints\UniqueField;
+use App\Entity\User;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Type;
-use Symfony\Component\Validator\Constraints\Unique;
 
 class CreateUserConstraints
 {
@@ -18,7 +19,8 @@ class CreateUserConstraints
                 'email' => [
                     new NotBlank(),
                     new Type('string'),
-                    new Email()
+                    new Email(),
+                    new UniqueField(['entity' => User::class, 'field' => 'email'])
                 ],
                 'password' => [
                     new NotBlank(),
@@ -27,7 +29,8 @@ class CreateUserConstraints
                 ],
                 'nick' => [
                     new NotBlank(),
-                    new Type('string')
+                    new Type('string'),
+                    new UniqueField(['entity' => User::class, 'field' => 'nick'])
                 ]
             ]
         ]);
