@@ -56,6 +56,25 @@ paths:
                   type: integer
               type: object
   /api/tasting-rooms:
+    get:
+      tags:
+        - 'Tasting Room'
+      summary: 'Get all tastingRooms'
+    put:
+      tags:
+        - 'Tasting Room'
+      summary: 'Start tasting room'
+      operationId: 'App\Controller\TastingRoomController::start'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                tastingRoomId:
+                  type: integer
+                status:
+                  type: bool
+              type: object
     post:
       tags:
         - 'Tasting Room'
@@ -89,6 +108,12 @@ paths:
                 code:
                   type: string
               type: object
+  '/api/tasting-rooms/{id}':
+    get:
+      tags:
+        - 'Tasting Room'
+      summary: 'Get tasting room by id'
+      operationId: 'App\Controller\TastingRoomController::getDetailsById'
   /api/users/register:
     post:
       tags:
