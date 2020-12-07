@@ -23,6 +23,7 @@ class ExceptionListener
 
     private function createApiResponse($exception)
     {
-        return new ApiResponse($exception->getMessage(), null, [], $exception->getCode());
+        $parsedString = str_replace('"', "", $exception->getMessage());
+        return new ApiResponse($parsedString, null, [], $exception->getCode());
     }
 }

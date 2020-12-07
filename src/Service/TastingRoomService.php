@@ -104,4 +104,15 @@ class TastingRoomService
 
         return $tastingRoom;
     }
+
+    public function getTastingRoomDetailsById(int $tastingRoomId): TastingRoom
+    {
+        $tastingRoom = $this->tastingRoomRepository->find($tastingRoomId);
+
+        if ($tastingRoom === null) {
+            throw new NotFoundException($tastingRoomId);
+        }
+
+        return $tastingRoom;
+    }
 }

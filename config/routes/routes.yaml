@@ -32,6 +32,18 @@ api.tastingroom.start:
     controller: App\Controller\TastingRoomController:start
     methods: PUT
 
+api.tastingroom.get:
+    path: /tasting-rooms
+    controller: App\Controller\TastingRoomController:list
+    methods: GET
+
+api.tastingroom.get_by_id:
+    path: /tasting-rooms/{id}
+    controller: App\Controller\TastingRoomController:getDetailsById
+    methods: GET
+    requirements:
+        tastingRoom: '\d+'
+
 #BEER
 api.beer.create:
     path: /beers

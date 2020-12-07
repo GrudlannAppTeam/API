@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Constraints\CreateTastingRoomConstraints;
+use App\Constraints\GetTastingRoomConstraints;
 use App\Constraints\JoinTastingRoomConstraints;
 use App\Constraints\StartTastingRoomConstraints;
 use App\Entity\TastingRoom;
@@ -138,6 +139,48 @@ class TastingRoomController extends AbstractBaseController
 
         $serializedTastingRoom = $this->_serializer->normalize($tastingRoom, 'array', [
             'groups' => 'tasting-room:post'
+        ]);
+
+        return new JsonResponse($serializedTastingRoom, JsonResponse::HTTP_OK);
+    }
+
+    /**
+     * @OA\Get(
+     *     tags={"Tasting Room"},
+     *     summary="Get all tastingRooms",
+     *     path="/api/tasting-rooms",
+     * )
+     */
+    public function list(TastingRoomService $tastingRoomService): JsonResponse
+    {
+        $tastingRooms = $tastingRoomService->getTastingRooms();
+
+        $serializedTastingRooms = $this->_serializer->normalize($tastingRooms, 'array', [
+            'groups' => 'tasting-room:get'
+        ]);
+
+        return new JsonResponse($serializedTastingRooms, JsonResponse::HTTP_OK);
+    }
+
+    /**
+     * @OA\Get(
+     *     tags={"Tasting Room"},
+     *     summary="Get tasting room by id",
+     *     path="/api/tasting-rooms/{id}",
+     * )
+     */
+    public function getDetailsById(Request $request, TastingRoomService $tastingRoomService): JsonResponse
+    {
+        $data['id'] = $request->attributes->get('id');
+        $this->_validatorService->validateArray(
+            $data = $request->attributes->all(),
+            GetTastingRoomConstraints::get()
+        );
+
+        $tastingRoom = $tastingRoomService->getTastingRoomDetailsById($data['id']);
+
+        $serializedTastingRoom = $this->_serializer->normalize($tastingRoom, 'array', [
+            'groups' => 'tasting-room:get'
         ]);
 
         return new JsonResponse($serializedTastingRoom, JsonResponse::HTTP_OK);
