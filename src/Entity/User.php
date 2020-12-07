@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -55,12 +56,18 @@ class User implements UserInterface
      */
     private $tastingRoom;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="user")
+     */
+    private $reviews;
+
     public function __construct(string $email, string $nick)
     {
         $this->email = $email;
         $this->nick = $nick;
-
         $this->setRoles(['ROLE_USER']);
+
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,6 +167,33 @@ class User implements UserInterface
     public function setTastingRoom(TastingRoom $tastingRoom): self
     {
         $this->tastingRoom = $tastingRoom;
+        return $this;
+    }
+
+    public function getReviews(): ArrayCollection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setUser($this); //TODO
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->contains($review)) {
+            $this->reviews->removeElement($review);
+            if ($review->getUser() === $this) {
+                $review->setUser(null);
+            }
+        }
+
         return $this;
     }
 }
