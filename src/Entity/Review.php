@@ -23,6 +23,16 @@ class Review
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="review")
+     */
+    private $questions;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TastingRoom", inversedBy="reviews")
+     */
+    private $tastingRoom;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -36,6 +46,44 @@ class Review
     public function setUser($user): self
     {
         $this->user = $user;
+        return $this;
+    }
+
+    public function getQuestions()
+    {
+        return $this->questions;
+    }
+
+    public function addQuestion(Question $question): self
+    {
+        if (!$this->questions->contains($question)) {
+            $this->questions[] = $question;
+            $question->setReview($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): self
+    {
+        if ($this->questions->contains($question)) {
+            $this->questions->removeElement($question);
+            if ($question->getReview() === $this) {
+                $question->setReview(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTastingRoom(): TastingRoom
+    {
+        return $this->tastingRoom;
+    }
+
+    public function setTastingRoom(TastingRoom $tastingRoom): self
+    {
+        $this->tastingRoom = $tastingRoom;
         return $this;
     }
 }

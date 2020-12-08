@@ -66,6 +66,11 @@ class TastingRoom
      */
     private $beers;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="tastingRoom")
+     */
+    private $reviews;
+
     public function __construct(string $name, string $code, User $owner)
     {
         $this->name = $name;
@@ -165,6 +170,33 @@ class TastingRoom
     public function setIsStart(bool $isStart): self
     {
         $this->isStart = $isStart;
+        return $this;
+    }
+
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setTastingRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->contains($review)) {
+            $this->reviews->removeElement($review);
+            if ($review->getTastingRoom() === $this) {
+                $review->setTastingRoom(null);
+            }
+        }
+
         return $this;
     }
 }
