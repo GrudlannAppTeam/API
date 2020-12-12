@@ -34,10 +34,16 @@ class Beer
      */
     private $tastingRooms;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="beer")
+     */
+    private $reviews;
+
     public function __construct(string $name)
     {
         $this->name = $name;
         $this->tastingRooms = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,6 +82,33 @@ class Beer
         if ($this->tastingRooms->contains($tastingRoom)) {
             $this->tastingRooms->removeElement($tastingRoom);
             $tastingRoom->removeBeer($this);
+        }
+
+        return $this;
+    }
+
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setBeer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->contains($review)) {
+            $this->reviews->removeElement($review);
+            if ($review->getBeer() === $this) {
+                $review->setBeer(null);
+            }
         }
 
         return $this;

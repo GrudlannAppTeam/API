@@ -23,11 +23,6 @@ class Question
      */
     private $answers;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Review", inversedBy="questions")
-     */
-    private $review;
-
     public function getId(): ?int
     {
         return $this->id;

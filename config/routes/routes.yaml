@@ -59,3 +59,9 @@ api.beer.add_tastingroom:
     path: /beers/tasting-rooms
     controller: App\Controller\BeerController:addBeerToTastingRoom
     methods: POST
+
+#REVIEW
+api.review.create:
+    path: /reviews
+    controller: App\Controller\ReviewController:create
+    methods: POST

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReviewRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ReviewRepository::class)
@@ -14,6 +15,8 @@ class Review
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @Groups({"review:post"})
      */
     private $id;
 
@@ -24,14 +27,27 @@ class Review
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="review")
-     */
-    private $questions;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TastingRoom", inversedBy="reviews")
      */
     private $tastingRoom;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Beer", inversedBy="reviews")
+     */
+    private $beer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Question")
+     */
+    private $question;
+
+    public function __construct(User $user, TastingRoom $tastingRoom, Beer $beer, Question $question)
+    {
+        $this->user = $user;
+        $this->tastingRoom = $tastingRoom;
+        $this->beer = $beer;
+        $this->question = $question;
+    }
 
     public function getId(): ?int
     {
@@ -49,33 +65,6 @@ class Review
         return $this;
     }
 
-    public function getQuestions()
-    {
-        return $this->questions;
-    }
-
-    public function addQuestion(Question $question): self
-    {
-        if (!$this->questions->contains($question)) {
-            $this->questions[] = $question;
-            $question->setReview($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQuestion(Question $question): self
-    {
-        if ($this->questions->contains($question)) {
-            $this->questions->removeElement($question);
-            if ($question->getReview() === $this) {
-                $question->setReview(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getTastingRoom(): TastingRoom
     {
         return $this->tastingRoom;
@@ -84,6 +73,28 @@ class Review
     public function setTastingRoom(TastingRoom $tastingRoom): self
     {
         $this->tastingRoom = $tastingRoom;
+        return $this;
+    }
+
+    public function getBeer(): Beer
+    {
+        return $this->beer;
+    }
+
+    public function setBeer(Beer $beer): self
+    {
+        $this->beer = $beer;
+        return $this;
+    }
+
+    public function getQuestion(): Question
+    {
+        return $this->question;
+    }
+
+    public function setQuestion($question): self
+    {
+        $this->question = $question;
         return $this;
     }
 }
