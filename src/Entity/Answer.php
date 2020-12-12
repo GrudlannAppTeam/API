@@ -23,6 +23,11 @@ class Answer
     private $name;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $lp;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Question", inversedBy="answers")
      * @ORM\JoinColumn(name="question_id", referencedColumnName="id")
      */
@@ -52,6 +57,17 @@ class Answer
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    public function getLp()
+    {
+        return $this->lp;
+    }
+
+    public function setLp($lp)
+    {
+        $this->lp = $lp;
         return $this;
     }
 }

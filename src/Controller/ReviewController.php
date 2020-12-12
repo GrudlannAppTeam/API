@@ -6,6 +6,7 @@ use App\Constraints\CreateReviewConstraints;
 use App\Service\ReviewService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use OpenApi\Annotations as OA;
 
 class ReviewController extends AbstractBaseController
 {
