@@ -9,6 +9,28 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ReviewController extends AbstractBaseController
 {
+    /**
+     * @OA\Post(
+     *     tags={"Review"},
+     *     summary="Create review",
+     *     path="/api/reviews",
+     *     @OA\RequestBody(
+     *       @OA\MediaType(
+     *           mediaType="application/json",
+     *           @OA\Schema(
+     *               @OA\Property(
+     *                   property="beerId",
+     *                   type="integer"
+     *               ),
+     *               @OA\Property(
+     *                   property="questionId",
+     *                   type="integer"
+     *               )
+     *           )
+     *       )
+     *    ),
+     * )
+     */
     public function create(Request $request, ReviewService $reviewService): JsonResponse
     {
         $this->_validatorService->validateArray(

@@ -19,6 +19,11 @@ class Question
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $name;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question")
      */
     private $answers;
@@ -55,14 +60,14 @@ class Question
         return $this;
     }
 
-    public function getReview(): Review
+    public function getName()
     {
-        return $this->review;
+        return $this->name;
     }
 
-    public function setReview($review): self
+    public function setName($name)
     {
-        $this->review = $review;
+        $this->name = $name;
         return $this;
     }
 }

@@ -55,6 +55,22 @@ paths:
                 tastingRoomId:
                   type: integer
               type: object
+  /api/reviews:
+    post:
+      tags:
+        - Review
+      summary: 'Create review'
+      operationId: 'App\Controller\ReviewController::create'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                beerId:
+                  type: integer
+                questionId:
+                  type: integer
+              type: object
   /api/tasting-rooms:
     get:
       tags:
