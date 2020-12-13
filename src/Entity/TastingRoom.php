@@ -18,14 +18,14 @@ class TastingRoom
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      *
-     * @Groups({"tasting-room:post", "tasting-room:get", "beer:add-tasting-room", "tasting-room:join"})
+     * @Groups({"tasting-room:post", "tasting-room:get", "beer:add-tasting-room", "tasting-room:join", "tasting-room:get:active"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=32)
      *
-     * @Groups({"tasting-room:post", "tasting-room:get", "tasting-room:join"})
+     * @Groups({"tasting-room:post", "tasting-room:get", "tasting-room:join", "tasting-room:get:active"})
      */
     private $name;
 
@@ -39,7 +39,7 @@ class TastingRoom
     /**
      * @ORM\Column(type="boolean", nullable=true)
      *
-     * @Groups({"tasting-room:post", "tasting-room:get"})
+     * @Groups({"tasting-room:post", "tasting-room:get", "tasting-room:get:active"})
      */
     private $isStart;
 
@@ -47,14 +47,14 @@ class TastingRoom
      * @ORM\OneToOne(targetEntity="User")
      * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
      *
-     * @Groups({"tasting-room:post", "tasting-room:get", "tasting-room:join"})
+     * @Groups({"tasting-room:post", "tasting-room:get", "tasting-room:join", "tasting-room:get:active"})
      */
     private $owner;
 
     /**
      * @ORM\OneToMany(targetEntity="User", mappedBy="tastingRoom")
      *
-     * @Groups({"tasting-room:join"})
+     * @Groups({"tasting-room:join", "tasting-room:get:active"})
      */
     private $users;
 
@@ -62,7 +62,7 @@ class TastingRoom
      * @ORM\ManyToMany(targetEntity="Beer", inversedBy="tastingRooms")
      * @ORM\JoinTable(name="tastingrooms_beers")
      *
-     * @Groups({"beer:add-tasting-room", "tasting-room:join"})
+     * @Groups({"beer:add-tasting-room", "tasting-room:join", "tasting-room:get:active"})
      */
     private $beers;
 

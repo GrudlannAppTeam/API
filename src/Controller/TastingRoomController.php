@@ -171,7 +171,6 @@ class TastingRoomController extends AbstractBaseController
      */
     public function getDetailsById(Request $request, TastingRoomService $tastingRoomService): JsonResponse
     {
-        $data['id'] = $request->attributes->get('id');
         $this->_validatorService->validateArray(
             $data = $request->attributes->all(),
             GetTastingRoomConstraints::get()
@@ -180,7 +179,7 @@ class TastingRoomController extends AbstractBaseController
         $tastingRoom = $tastingRoomService->getTastingRoomDetailsById($data['id']);
 
         $serializedTastingRoom = $this->_serializer->normalize($tastingRoom, 'array', [
-            'groups' => 'tasting-room:get'
+            'groups' => 'tasting-room:get:active'
         ]);
 
         return new JsonResponse($serializedTastingRoom, JsonResponse::HTTP_OK);

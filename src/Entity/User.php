@@ -22,7 +22,7 @@ class User implements UserInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      *
-     * @Groups({"user:post", "user:get", "tasting-room:post", "tasting-room:join", "tasting-room:get"})
+     * @Groups({"user:post", "user:get", "tasting-room:post", "tasting-room:join", "tasting-room:get", "tasting-room:get:active"})
      */
     private $id;
 
@@ -47,7 +47,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=64, unique=true)
      *
-     * @Groups({"user:post", "user:get", "tasting-room:join"})
+     * @Groups({"user:post", "user:get", "tasting-room:join", "tasting-room:get:active"})
      */
     private $nick;
 
