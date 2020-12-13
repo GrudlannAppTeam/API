@@ -13,6 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @UniqueEntity("email, nick")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -51,6 +52,16 @@ class User implements UserInterface
     private $nick;
 
     /**
+     * @ORM\Column(type="string", length=40, nullable=true)
+     */
+    private $confirmationToken;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : false})
+     */
+    private $enabled;
+
+    /**
      * @ORM\ManyToOne(targetEntity="TastingRoom", inversedBy="users")
      * @ORM\JoinColumn(name="tasting_room_id", referencedColumnName="id")
      */
@@ -66,6 +77,8 @@ class User implements UserInterface
         $this->email = $email;
         $this->nick = $nick;
         $this->setRoles(['ROLE_USER']);
+        $this->confirmationToken = null;
+        $this->enabled = false;
 
         $this->reviews = new ArrayCollection();
     }
@@ -194,6 +207,28 @@ class User implements UserInterface
             }
         }
 
+        return $this;
+    }
+
+    public function getConfirmationToken(): string
+    {
+        return $this->confirmationToken;
+    }
+
+    public function setConfirmationToken($confirmationToken): self
+    {
+        $this->confirmationToken = $confirmationToken;
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled($enabled): self
+    {
+        $this->enabled = $enabled;
         return $this;
     }
 }
