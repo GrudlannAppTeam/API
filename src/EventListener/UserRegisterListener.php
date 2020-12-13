@@ -2,6 +2,7 @@
 
 namespace App\EventListener;
 
+use App\Email\Mailer;
 use App\Entity\User;
 use App\Service\TokenGeneratorService;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
@@ -9,10 +10,12 @@ use Doctrine\Persistence\Event\LifecycleEventArgs;
 class UserRegisterListener
 {
     private $tokenGenerator;
+    private $mailer;
 
-    public function __construct(TokenGeneratorService $tokenGenerator)
+    public function __construct(TokenGeneratorService $tokenGenerator, Mailer $mailer)
     {
         $this->tokenGenerator = $tokenGenerator;
+        $this->mailer = $mailer;
     }
 
     public function postPersist(LifecycleEventArgs $args)
@@ -29,6 +32,6 @@ class UserRegisterListener
 
         $em->flush();
 
-        //@TODO SEND EMAIL
+        $this->mailer->sendConfirmationEmail($entity);
     }
 }

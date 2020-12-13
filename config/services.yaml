@@ -50,3 +50,6 @@ services:
         autowire: true
         tags:
             - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+
+    App\Email\Mailer:
+        arguments:
