@@ -51,5 +51,6 @@ services:
         tags:
             - { name: doctrine.event_listener, event: postPersist, method: postPersist }
 
-    App\Email\Mailer:
-        arguments:
+    App\Service\UserEnabledChecker:
+        autowire: true
+        public: true

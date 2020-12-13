@@ -9,6 +9,11 @@ api.users.get:
     controller: App\Controller\UserController:getUsers
     methods: GET
 
+api.users.confirm:
+    path: /users/confirm/{token}
+    controller: App\Controller\UserController:confirm
+    methods: GET
+
 #TASTING ROOM
 api.tastingroom.create:
     path: /tasting-rooms

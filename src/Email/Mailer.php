@@ -23,7 +23,7 @@ class Mailer
                 'user' => $user
             ]
         );
-        $message = (new \Swift_Message('Please confirm your account'))
+        $message = (new \Swift_Message('[Grudlann] Potwierdź konto'))
             ->setFrom('grudlannapp@gmail.com')
             ->setTo($user->getEmail())
             ->setBody($body, 'text/html');

@@ -3,15 +3,11 @@
 namespace App\Controller;
 
 use App\Constraints\CreateUserConstraints;
-use App\Constraints\TestDTO;
 use App\Service\UserService;
 use App\Service\ValidatorService;
 use OpenApi\Annotations as OA;
-use Symfony\Bundle\MakerBundle\Validator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserController extends AbstractBaseController
 {
@@ -88,5 +84,19 @@ class UserController extends AbstractBaseController
         ]);
 
         return new JsonResponse($serializedUsers, JsonResponse::HTTP_OK);
+    }
+
+    /**
+     * @OA\Get(
+     *     tags={"User"},
+     *     summary="Confirm user by token - via email",
+     *     path="/api/users/confirm/{token}",
+     * )
+     */
+    public function confirm(string $token, UserService $userService): JsonResponse
+    {
+        $userService->confirmUser($token);
+
+        return new JsonResponse('OK', JsonResponse::HTTP_OK);
     }
 }

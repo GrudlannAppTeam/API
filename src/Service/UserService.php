@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\User;
+use App\Exception\NotFoundException;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserService
@@ -38,5 +40,18 @@ class UserService
     public function getUsers(): array
     {
         return $this->userRepository->findAll();
+    }
+
+    public function confirmUser(string $confirmationToken): void
+    {
+        $user = $this->userRepository->findOneBy(['confirmationToken' => $confirmationToken]);
+
+        if (!$user) {
+            throw new NotFoundException($confirmationToken);
+        }
+
+        $user->setEnabled(true);
+        $user->setConfirmationToken(null);
+        $this->em->flush();
     }
 }
