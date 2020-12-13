@@ -172,7 +172,7 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getTastingRoom(): TastingRoom
+    public function getTastingRoom(): ?TastingRoom
     {
         return $this->tastingRoom;
     }
