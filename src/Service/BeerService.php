@@ -34,14 +34,14 @@ class BeerService
         return $beer;
     }
 
-    public function getAllBeers(): array
+    public function getAllBeersForTastingRoom($tastingRoomId): array
     {
-        return $this->beerRepository->findAll();
+        return $this->beerRepository->findBeersBelongsToTastingRoom($tastingRoomId);
     }
 
-    public function addBeerToTastingRoom(int $beerId, int $tastingRoomId, int $userId): TastingRoom
+    public function addBeerToTastingRoom(string $beerName, int $tastingRoomId, int $userId): TastingRoom
     {
-        $beer = $this->beerRepository->find($beerId);
+        $beer = new Beer($beerName);
         $tastingRoom = $this->tastingRoomRepository->find($tastingRoomId);
 
         if ($tastingRoom->getOwner() === $userId) {
@@ -52,7 +52,7 @@ class BeerService
             throw new NotFoundException();
         }
 
-        $beer->addTastingRoom($tastingRoom);
+        $beer->setTastingRoom($tastingRoom);
 
         $this->em->persist($beer);
         $this->em->flush();

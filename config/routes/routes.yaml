@@ -50,15 +50,12 @@ api.tastingroom.get_by_id:
         tastingRoom: '\d+'
 
 #BEER
-api.beer.create:
-    path: /beers
-    controller: App\Controller\BeerController:create
-    methods: POST
-
 api.beer.get:
-    path: /beers
-    controller: App\Controller\BeerController:list
+    path: /beers/tasting-rooms/{tastingRoomId}
+    controller: App\Controller\BeerController:listBeersForTastingRoom
     methods: GET
+    requirements:
+        tastingRoomId: '\d+'
 
 api.beer.add_tastingroom:
     path: /beers/tasting-rooms

@@ -19,6 +19,16 @@ class BeerRepository extends ServiceEntityRepository
         parent::__construct($registry, Beer::class);
     }
 
+    public function findBeersBelongsToTastingRoom($tastingRoomId)
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.tastingRoom = :val')
+            ->setParameter('val', $tastingRoomId)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Beer[] Returns an array of Beer objects
     //  */

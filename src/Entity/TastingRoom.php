@@ -59,8 +59,7 @@ class TastingRoom
     private $users;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Beer", inversedBy="tastingRooms")
-     * @ORM\JoinTable(name="tastingrooms_beers")
+     * @ORM\OneToMany(targetEntity="Beer", mappedBy="tastingRoom")
      *
      * @Groups({"beer:add-tasting-room", "tasting-room:join", "tasting-room:get:active"})
      */
@@ -77,7 +76,6 @@ class TastingRoom
         $this->code = $code;
         $this->owner = $owner;
         $this->users = new ArrayCollection();
-        $this->beers = new ArrayCollection();
     }
 
     public function getId(): int

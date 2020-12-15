@@ -30,9 +30,9 @@ class Beer
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="TastingRoom", mappedBy="beers")
+     * @ORM\ManyToOne(targetEntity="TastingRoom", inversedBy="beers")
      */
-    private $tastingRooms;
+    private $tastingRoom;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="beer")
@@ -42,7 +42,6 @@ class Beer
     public function __construct(string $name)
     {
         $this->name = $name;
-        $this->tastingRooms = new ArrayCollection();
         $this->reviews = new ArrayCollection();
     }
 
@@ -62,28 +61,14 @@ class Beer
         return $this;
     }
 
-    public function getTastingRooms(): Collection
+    public function getTastingRoom(): ?TastingRoom
     {
-        return $this->tastingRooms;
+        return $this->tastingRoom;
     }
 
-    public function addTastingRoom(TastingRoom $tastingRoom): self
+    public function setTastingRoom($tastingRoom): self
     {
-        if (!$this->tastingRooms->contains($tastingRoom)) {
-            $this->tastingRooms[] = $tastingRoom;
-            $tastingRoom->addBeer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTastingRoom(TastingRoom $tastingRoom): self
-    {
-        if ($this->tastingRooms->contains($tastingRoom)) {
-            $this->tastingRooms->removeElement($tastingRoom);
-            $tastingRoom->removeBeer($this);
-        }
-
+        $this->tastingRoom = $tastingRoom;
         return $this;
     }
 
