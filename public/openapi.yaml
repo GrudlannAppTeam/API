@@ -21,24 +21,12 @@ paths:
                   type: string
                   example: Testowe123!
               type: object
-  /api/beers:
+  '/api/beers/{tastingRoomId}':
     get:
       tags:
         - Beer
-      summary: 'Get all beers'
-    post:
-      tags:
-        - Beer
-      summary: Create
-      operationId: 'App\Controller\BeerController::create'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                name:
-                  type: string
-              type: object
+      summary: 'Get all beers for tasting room'
+      operationId: 'App\Controller\BeerController::listBeersForTastingRoom'
   /api/beers/tasting-rooms:
     post:
       tags:
@@ -50,8 +38,8 @@ paths:
           application/json:
             schema:
               properties:
-                beerId:
-                  type: integer
+                beerName:
+                  type: name
                 tastingRoomId:
                   type: integer
               type: object
@@ -157,3 +145,9 @@ paths:
         - User
       summary: 'Get all users'
       operationId: 'App\Controller\UserController::getUsers'
+  '/api/users/confirm/{token}':
+    get:
+      tags:
+        - User
+      summary: 'Confirm user by token - via email'
+      operationId: 'App\Controller\UserController::confirm'
