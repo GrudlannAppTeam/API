@@ -38,6 +38,10 @@ class TastingRoomService
         $this->em->persist($tastingRoom);
         $this->em->flush();
 
+        $owner->setTastingRoom($tastingRoom);
+        $this->em->persist($owner);
+        $this->em->flush();
+
         return $tastingRoom;
     }
 
