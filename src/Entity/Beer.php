@@ -35,7 +35,7 @@ class Beer
     private $tastingRoom;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="beer")
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="beer", orphanRemoval=true)
      */
     private $reviews;
 

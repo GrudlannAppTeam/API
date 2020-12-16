@@ -52,21 +52,21 @@ class TastingRoom
     private $owner;
 
     /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="tastingRoom")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="tastingRoom", orphanRemoval=true)
      *
      * @Groups({"tasting-room:join", "tasting-room:get:active"})
      */
     private $users;
 
     /**
-     * @ORM\OneToMany(targetEntity="Beer", mappedBy="tastingRoom")
+     * @ORM\OneToMany(targetEntity="Beer", mappedBy="tastingRoom", orphanRemoval=true)
      *
      * @Groups({"beer:add-tasting-room", "tasting-room:join", "tasting-room:get:active"})
      */
     private $beers;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="tastingRoom")
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="tastingRoom", orphanRemoval=true)
      */
     private $reviews;
 
