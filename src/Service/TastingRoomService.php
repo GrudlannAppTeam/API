@@ -102,6 +102,10 @@ class TastingRoomService
             throw new NotFoundException($tastingRoomId);
         }
 
+        if ($status === false) {
+            $this->removeUsersBelongsToTastingRoom($tastingRoom);
+        }
+
         $tastingRoom->setIsStart($status);
         $this->em->persist($tastingRoom);
         $this->em->flush();
@@ -118,5 +122,15 @@ class TastingRoomService
         }
 
         return $tastingRoom;
+    }
+
+    private function removeUsersBelongsToTastingRoom(TastingRoom $tastingRoom): void
+    {
+        $users = $tastingRoom->getUsers();
+
+        /** @var User $user */
+        foreach ($users as $user) {
+            $user->setTastingRoom(null);
+        }
     }
 }

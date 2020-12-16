@@ -63,7 +63,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="TastingRoom", inversedBy="users")
-     * @ORM\JoinColumn(name="tasting_room_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="tasting_room_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $tastingRoom;
 
@@ -177,7 +177,7 @@ class User implements UserInterface
         return $this->tastingRoom;
     }
 
-    public function setTastingRoom(TastingRoom $tastingRoom): self
+    public function setTastingRoom(?TastingRoom $tastingRoom): self
     {
         $this->tastingRoom = $tastingRoom;
         return $this;
