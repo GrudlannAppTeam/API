@@ -9,6 +9,7 @@ use App\Exception\TastingRoomIsStartException;
 use App\Exception\TastingRoomOwnerException;
 use App\Exception\UserHasRoomException;
 use App\Repository\TastingRoomRepository;
+use App\Repository\UserRepository;
 use App\Utils\CodeGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -17,12 +18,14 @@ class TastingRoomService
     private $tastingRoomRepository;
     private $em;
     private $codeGenerator;
+    private $userRepository;
 
-    public function __construct(TastingRoomRepository $tastingRoomRepository, EntityManagerInterface $em, CodeGenerator $codeGenerator)
+    public function __construct(TastingRoomRepository $tastingRoomRepository, UserRepository $userRepository, EntityManagerInterface $em, CodeGenerator $codeGenerator)
     {
         $this->tastingRoomRepository = $tastingRoomRepository;
         $this->em = $em;
         $this->codeGenerator = $codeGenerator;
+        $this->userRepository = $userRepository;
     }
 
     public function createTastingRoom(string $name, User $owner): TastingRoom
@@ -70,6 +73,9 @@ class TastingRoomService
         if ($tastingRoom->getOwner()->getId() !== $ownerId) {
             throw new TastingRoomOwnerException();
         }
+
+        $user = $this->userRepository->findOneBy(['tastingRoom' => $tastingRoom]);
+        $user->setTastingRoom(null);
 
         $this->em->remove($tastingRoom);
         $this->em->flush();

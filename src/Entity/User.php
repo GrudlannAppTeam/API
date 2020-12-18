@@ -63,7 +63,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="TastingRoom", inversedBy="users")
-     * @ORM\JoinColumn(name="tasting_room_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="tasting_room_id", referencedColumnName="id")
      */
     private $tastingRoom;
 

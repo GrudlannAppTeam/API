@@ -32,7 +32,7 @@ class TastingRoom
     /**
      * @ORM\Column(type="string", length=6)
      *
-     * @Groups({"tasting-room:post", "tasting-room:get"})
+     * @Groups({"tasting-room:post", "tasting-room:get", "tasting-room:get:active"})
      */
     private $code;
 
@@ -52,7 +52,7 @@ class TastingRoom
     private $owner;
 
     /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="tastingRoom", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="User", mappedBy="tastingRoom")
      *
      * @Groups({"tasting-room:join", "tasting-room:get:active"})
      */
