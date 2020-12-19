@@ -138,5 +138,7 @@ class TastingRoomService
         foreach ($users as $user) {
             $user->setTastingRoom(null);
         }
+
+        $tastingRoom->setOwner(null);
     }
 }
