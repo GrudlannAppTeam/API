@@ -14,6 +14,13 @@ api.users.confirm:
     controller: App\Controller\UserController:confirm
     methods: GET
 
+api.users.get_by_id:
+    path: /users/{id}
+    controller: App\Controller\UserController:getUserById
+    methods: GET
+    requirements:
+        id: '\d+'
+
 #TASTING ROOM
 api.tastingroom.create:
     path: /tasting-rooms

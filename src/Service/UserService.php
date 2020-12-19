@@ -54,4 +54,15 @@ class UserService
         $user->setConfirmationToken(null);
         $this->em->flush();
     }
+
+    public function getUserById(int $id): User
+    {
+        $user = $this->userRepository->find($id);
+
+        if (!$user) {
+            throw new NotFoundException($id);
+        }
+
+        return $user;
+    }
 }

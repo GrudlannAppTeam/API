@@ -26,6 +26,7 @@ class AuthenticationSuccessListener
         $this->validatorService = $validatorService;
         $this->em = $em;
     }
+
     public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $event)
     {
         /** @var User $user */
@@ -38,6 +39,7 @@ class AuthenticationSuccessListener
         }
 
         $event->setData([
+            'userId' => $user->getId(),
             'nick' => $user->getNick(),
             'token' => $event->getData()['token'],
             'tastingRoom' => $serializedTastingRoom ?? null

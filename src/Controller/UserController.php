@@ -99,4 +99,28 @@ class UserController extends AbstractBaseController
 
         return new JsonResponse('OK', JsonResponse::HTTP_OK);
     }
+
+    /**
+     * @OA\Get(
+     *     tags={"User"},
+     *     summary="Get user by id",
+     *     path="/api/users/{id}",
+     * )
+     */
+    public function getUserById(int $id, UserService $userService): JsonResponse
+    {
+        $user = $userService->getUserById($id);
+
+        if ($user->getTastingRoom()) {
+            $serializedData = $this->_serializer->normalize($user->getTastingRoom(), 'array', [
+                'groups' => 'tasting-room:get:active'
+            ]);
+        } else {
+            $serializedData = $this->_serializer->normalize($user, 'array', [
+                'groups' => 'user:get'
+            ]);
+        }
+
+        return new JsonResponse($serializedData, JsonResponse::HTTP_OK);
+    }
 }
