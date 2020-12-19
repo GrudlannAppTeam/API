@@ -15,7 +15,3 @@ https://grudlann-app.herokuapp.com/swagger/index.html#/
 The project is connected to automatic building on the Heroku server and available at: <br/>
 https://grudlann-app.herokuapp.com/
 
-## Docker image
-
-Auto build as a docker image for this application is not available yet. <br/>
-
