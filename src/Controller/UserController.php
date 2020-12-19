@@ -115,6 +115,7 @@ class UserController extends AbstractBaseController
             $serializedData = $this->_serializer->normalize($user->getTastingRoom(), 'array', [
                 'groups' => 'tasting-room:get:active'
             ]);
+            $serializedData['nick'] = $user->getNick();
         } else {
             $serializedData = $this->_serializer->normalize($user, 'array', [
                 'groups' => 'user:get'
