@@ -151,3 +151,9 @@ paths:
         - User
       summary: 'Confirm user by token - via email'
       operationId: 'App\Controller\UserController::confirm'
+  '/api/users/{id}':
+    get:
+      tags:
+        - User
+      summary: 'Get user by id'
+      operationId: 'App\Controller\UserController::getUserById'
