@@ -99,7 +99,7 @@ class TastingRoom
         return $this->code;
     }
 
-    public function getOwner(): User
+    public function getOwner(): ?User
     {
         return $this->owner;
     }
