@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Exception\NotFoundException;
 use App\Repository\BeerRepository;
 use App\Repository\QuestionRepository;
+use App\Repository\ReviewRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ReviewService
@@ -14,12 +15,14 @@ class ReviewService
     private $beerRepository;
     private $em;
     private $questionRepository;
+    private $reviewRepository;
 
-    public function __construct(QuestionRepository$questionRepository, BeerRepository $beerRepository, EntityManagerInterface $em)
+    public function __construct(ReviewRepository $reviewRepository, QuestionRepository$questionRepository, BeerRepository $beerRepository, EntityManagerInterface $em)
     {
         $this->beerRepository = $beerRepository;
         $this->em = $em;
         $this->questionRepository = $questionRepository;
+        $this->reviewRepository = $reviewRepository;
     }
 
     public function createReview(User $user, int $beerId, int $questionId): Review
@@ -46,5 +49,10 @@ class ReviewService
         $this->em->flush();
 
         return $review;
+    }
+
+    public function getQA(): array
+    {
+        return $this->questionRepository->findAll();
     }
 }

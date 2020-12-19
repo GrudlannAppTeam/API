@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use App\Repository\QuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=QuestionRepository::class)
@@ -20,20 +22,29 @@ class Question
 
     /**
      * @ORM\Column(type="string", length=64)
+     *
+     * @Groups({"review:get:qa"})
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question")
+     *
+     * @Groups({"review:get:qa"})
      */
     private $answers;
+
+    public function __construct()
+    {
+        $this->answers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getAnswers(): ArrayCollection
+    public function getAnswers(): Collection
     {
         return $this->answers;
     }

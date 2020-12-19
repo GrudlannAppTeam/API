@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AnswerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=AnswerRepository::class)
@@ -19,11 +20,15 @@ class Answer
 
     /**
      * @ORM\Column(type="string", length=128)
+     *
+     * @Groups({"review:get:qa"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
+     *
+     * @Groups({"review:get:qa"})
      */
     private $lp;
 

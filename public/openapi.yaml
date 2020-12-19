@@ -43,6 +43,12 @@ paths:
                 tastingRoomId:
                   type: integer
               type: object
+  /api/questions/answers:
+    get:
+      tags:
+        - 'Question and Answers'
+      summary: 'Get all questions and answers to them'
+      operationId: 'App\Controller\QuestionAnswerController::getQuestionsAndAnswers'
   /api/reviews:
     post:
       tags:
