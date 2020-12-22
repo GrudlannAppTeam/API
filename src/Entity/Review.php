@@ -37,16 +37,16 @@ class Review
     private $beer;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Question")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Answer")
      */
-    private $question;
+    private $answer;
 
-    public function __construct(User $user, TastingRoom $tastingRoom, Beer $beer, Question $question)
+    public function __construct(User $user, TastingRoom $tastingRoom, Beer $beer, Answer $answer)
     {
         $this->user = $user;
         $this->tastingRoom = $tastingRoom;
         $this->beer = $beer;
-        $this->question = $question;
+        $this->answer = $answer;
     }
 
     public function getId(): ?int
@@ -87,14 +87,14 @@ class Review
         return $this;
     }
 
-    public function getQuestion(): Question
+    public function getAnswer(): Answer
     {
-        return $this->question;
+        return $this->answer;
     }
 
-    public function setQuestion($question): self
+    public function setAnswer(Answer $answer): self
     {
-        $this->question = $question;
+        $this->answer = $answer;
         return $this;
     }
 }

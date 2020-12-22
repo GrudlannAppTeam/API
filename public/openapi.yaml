@@ -62,7 +62,7 @@ paths:
               properties:
                 beerId:
                   type: integer
-                questionId:
+                answerId:
                   type: integer
               type: object
   /api/tasting-rooms:

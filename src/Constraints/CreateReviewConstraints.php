@@ -18,7 +18,7 @@ class CreateReviewConstraints
                     new NotBlank(),
                     new Type('integer')
                 ],
-                'questionId' => [
+                'answerId' => [
                     new NotBlank(),
                     new Type('integer')
                 ]

@@ -24,7 +24,7 @@ class ReviewController extends AbstractBaseController
      *                   type="integer"
      *               ),
      *               @OA\Property(
-     *                   property="questionId",
+     *                   property="answerId",
      *                   type="integer"
      *               )
      *           )
@@ -42,7 +42,7 @@ class ReviewController extends AbstractBaseController
         $review = $reviewService->createReview(
             $this->getUser(),
             $data['beerId'],
-            $data['questionId']
+            $data['answerId']
         );
 
         $serializedReview = $this->_serializer->normalize($review, 'array', [

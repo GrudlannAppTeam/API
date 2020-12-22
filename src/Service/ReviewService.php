@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Review;
 use App\Entity\User;
 use App\Exception\NotFoundException;
+use App\Repository\AnswerRepository;
 use App\Repository\BeerRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\ReviewRepository;
@@ -14,35 +15,37 @@ class ReviewService
 {
     private $beerRepository;
     private $em;
-    private $questionRepository;
     private $reviewRepository;
+    private $answerRepository;
+    private $questionRepository;
 
-    public function __construct(ReviewRepository $reviewRepository, QuestionRepository$questionRepository, BeerRepository $beerRepository, EntityManagerInterface $em)
+    public function __construct(ReviewRepository $reviewRepository, QuestionRepository $questionRepository, AnswerRepository $answerRepository, BeerRepository $beerRepository, EntityManagerInterface $em)
     {
         $this->beerRepository = $beerRepository;
         $this->em = $em;
-        $this->questionRepository = $questionRepository;
         $this->reviewRepository = $reviewRepository;
+        $this->answerRepository = $answerRepository;
+        $this->questionRepository = $questionRepository;
     }
 
-    public function createReview(User $user, int $beerId, int $questionId): Review
+    public function createReview(User $user, int $beerId, int $answerId): Review
     {
         $beer = $this->beerRepository->find($beerId);
-        $question = $this->questionRepository->find($questionId);
+        $answer = $this->answerRepository->find($answerId);
 
         if (!$beer) {
             throw new NotFoundException($beerId);
         }
 
-        if (!$question) {
-            throw new NotFoundException($questionId);
+        if (!$answer) {
+            throw new NotFoundException($answerId);
         }
 
         $review = new Review(
             $user,
             $user->getTastingRoom(),
             $beer,
-            $question
+            $answer
         );
 
         $this->em->persist($review);
