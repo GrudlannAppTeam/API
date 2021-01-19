@@ -69,4 +69,22 @@ class ReviewController extends AbstractBaseController
 
         return new JsonResponse($serializedStatistics, JsonResponse::HTTP_OK);
     }
+
+    /**
+     * @OA\Get(
+     *     tags={"Review"},
+     *     summary="Get statistics by tasting room",
+     *     path="/api/reviews/statistics/{tastingRoomId}",
+     * )
+     */
+    public function statisticsByTastingRoom(int $tastingRoomId, ReviewService $reviewService): JsonResponse
+    {
+        $reviews = $reviewService->getStatisticsByTastingRoom($this->getUser()->getId(), $tastingRoomId);
+
+        $serializedStatistics = $this->_serializer->normalize($reviews, 'array', [
+            'groups' => 'review:statistic'
+        ]);
+
+        return new JsonResponse($serializedStatistics, JsonResponse::HTTP_OK);
+    }
 }

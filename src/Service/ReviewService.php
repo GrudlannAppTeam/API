@@ -63,4 +63,9 @@ class ReviewService
     {
         return $this->reviewRepository->findBy(['user' => $userId]);
     }
+
+    public function getStatisticsByTastingRoom(int $userId, int $tastingRoomId): array
+    {
+        return $this->reviewRepository->findBy(['user' => $userId, 'tastingRoom' => $tastingRoomId]);
+    }
 }

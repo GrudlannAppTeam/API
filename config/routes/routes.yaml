@@ -80,6 +80,11 @@ api.review.statistic:
     controller: App\Controller\ReviewController:statistics
     methods: GET
 
+api.review.statistic_by_tastingroom:
+    path: /reviews/statistics/{tastingRoomId}
+    controller: App\Controller\ReviewController:statisticsByTastingRoom
+    methods: GET
+
 #QUESTIONS AND ANSWERS
 api.questions_answers.get:
     path: /questions/answers

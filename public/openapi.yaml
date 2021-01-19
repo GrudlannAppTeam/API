@@ -71,6 +71,12 @@ paths:
         - Review
       summary: 'Get statistics'
       operationId: 'App\Controller\ReviewController::statistics'
+  '/api/reviews/statistics/{tastingRoomId}':
+    get:
+      tags:
+        - Review
+      summary: 'Get statistics by tasting room'
+      operationId: 'App\Controller\ReviewController::statisticsByTastingRoom'
   /api/tasting-rooms:
     get:
       tags:
