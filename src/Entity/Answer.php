@@ -15,26 +15,30 @@ class Answer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @Groups({"review:statistic"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=128)
      *
-     * @Groups({"review:get:qa"})
+     * @Groups({"review:get:qa", "review:statistic"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
      *
-     * @Groups({"review:get:qa"})
+     * @Groups({"review:get:qa", "review:statistic"})
      */
     private $lp;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Question", inversedBy="answers")
      * @ORM\JoinColumn(name="question_id", referencedColumnName="id")
+     *
+     * @Groups({"review:statistic"})
      */
     private $question;
 

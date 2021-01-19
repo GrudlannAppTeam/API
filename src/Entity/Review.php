@@ -16,7 +16,7 @@ class Review
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      *
-     * @Groups({"review:post"})
+     * @Groups({"review:post", "review:statistic"})
      */
     private $id;
 
@@ -28,16 +28,22 @@ class Review
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TastingRoom", inversedBy="reviews")
+     *
+     * @Groups({"review:statistic"})
      */
     private $tastingRoom;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Beer", inversedBy="reviews")
+     *
+     * @Groups({"review:statistic"})
      */
     private $beer;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Answer")
+     *
+     * @Groups({"review:statistic"})
      */
     private $answer;
 

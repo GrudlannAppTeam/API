@@ -65,6 +65,12 @@ paths:
                 answerId:
                   type: integer
               type: object
+  /api/reviews/statistics:
+    get:
+      tags:
+        - Review
+      summary: 'Get statistics'
+      operationId: 'App\Controller\ReviewController::statistics'
   /api/tasting-rooms:
     get:
       tags:

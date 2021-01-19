@@ -18,14 +18,14 @@ class TastingRoom
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      *
-     * @Groups({"tasting-room:post", "tasting-room:get", "beer:add-tasting-room", "tasting-room:join", "tasting-room:get:active"})
+     * @Groups({"tasting-room:post", "tasting-room:get", "beer:add-tasting-room", "tasting-room:join", "tasting-room:get:active", "review:statistic"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=32)
      *
-     * @Groups({"tasting-room:post", "tasting-room:get", "tasting-room:join", "tasting-room:get:active"})
+     * @Groups({"tasting-room:post", "tasting-room:get", "tasting-room:join", "tasting-room:get:active", "review:statistic"})
      */
     private $name;
 

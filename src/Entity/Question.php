@@ -17,13 +17,15 @@ class Question
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @Groups({"review:statistic"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
      *
-     * @Groups({"review:get:qa"})
+     * @Groups({"review:get:qa", "review:statistic"})
      */
     private $name;
 

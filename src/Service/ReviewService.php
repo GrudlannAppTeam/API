@@ -58,4 +58,9 @@ class ReviewService
     {
         return $this->questionRepository->findAll();
     }
+
+    public function getStatistics(int $userId): array
+    {
+        return $this->reviewRepository->findBy(['user' => $userId]);
+    }
 }

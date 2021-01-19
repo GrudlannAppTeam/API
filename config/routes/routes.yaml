@@ -75,6 +75,11 @@ api.review.create:
     controller: App\Controller\ReviewController:create
     methods: POST
 
+api.review.statistic:
+    path: /reviews/statistics
+    controller: App\Controller\ReviewController:statistics
+    methods: GET
+
 #QUESTIONS AND ANSWERS
 api.questions_answers.get:
     path: /questions/answers
