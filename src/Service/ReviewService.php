@@ -5,6 +5,8 @@ namespace App\Service;
 use App\Entity\Review;
 use App\Entity\User;
 use App\Exception\NotFoundException;
+use App\Exception\ReviewExistsException;
+use App\Exception\ValidationException;
 use App\Repository\AnswerRepository;
 use App\Repository\BeerRepository;
 use App\Repository\QuestionRepository;
@@ -39,6 +41,12 @@ class ReviewService
 
         if (!$answer) {
             throw new NotFoundException($answerId);
+        }
+
+        $existsReview = $this->reviewRepository->findBy(['user' => $user, 'tastingRoom' => $user->getTastingRoom(), 'beer' => $beer]);
+
+        if ($existsReview) {
+            throw new ReviewExistsException();
         }
 
         $review = new Review(
